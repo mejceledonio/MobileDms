@@ -1,4 +1,5 @@
 #search function
+import requests
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 import socket
@@ -158,7 +159,46 @@ search_ip_header_label.pack()
 search_ip_back_button = tk.Button(search_ip_frame, text="Back", command=lambda: (search_ip_frame.pack_forget(), index_frame.pack()), anchor='nw')
 search_ip_back_button.pack()
 
-# TODO: Add functionality for searching IP and displaying its details
+# Entry field for inputting the IP address
+ip_entry = tk.Entry(search_ip_frame)
+ip_entry.pack()
+
+# Label for displaying IPv4 address
+ip_v4_label = tk.Label(search_ip_frame, text="")
+ip_v4_label.pack()
+
+# Text widget for displaying details
+details_text = tk.Text(search_ip_frame, height=10, width=50)
+details_text.pack()
+
+def get_ip_info(ipv4_address):
+    try:
+        # Retrieve detailed IP information from ipinfo.io
+        details_response = requests.get(f"https://ipinfo.io/{ipv4_address}/json")
+        if details_response.status_code == 200:
+            details_data = details_response.json()
+            update_details(details_data)
+        else:
+            update_details({"error": "Error fetching details"})
+    except requests.exceptions.RequestException as e:
+        update_details({"error": f"Error: {e}"})
+
+def get_ip_info_wrapper():
+    ipv4_address = ip_entry.get()
+    ip_v4_label.config(text=f"IPv4: {ipv4_address}")
+    get_ip_info(ipv4_address)
+
+def update_details(details_data):
+    details_text.delete('1.0', tk.END)
+    if "error" in details_data:
+        details_text.insert(tk.END, details_data["error"])
+    else:
+        for key, value in details_data.items():
+            details_text.insert(tk.END, f"{key}: {value}\n")
+
+# Button to search for IP details
+search_ip_button = tk.Button(search_ip_frame, text="Search", command=get_ip_info_wrapper)
+search_ip_button.pack()
 
 # Pack the search IP frame (initially hidden)
 search_ip_frame.pack_forget()
