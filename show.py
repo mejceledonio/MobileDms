@@ -1,3 +1,4 @@
+#search function
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 import socket
@@ -53,6 +54,12 @@ def show_connection_checker():
     # Get connected devices information
     get_connected_devices()
 
+def show_search_ip_page():
+    # Hide the index page widgets
+    index_frame.pack_forget()
+    # Show the search IP page widgets
+    search_ip_frame.pack()
+
 # Create the main window
 root = tk.Tk()
 root.title("IP Address Management")
@@ -74,6 +81,10 @@ ip_button.pack()
 # Button to navigate to the connection checker
 connection_button = tk.Button(index_frame, text="Connection Checker", command=show_connection_checker)
 connection_button.pack()
+
+# Button to navigate to the search IP page
+search_ip_button = tk.Button(index_frame, text="Search IP", command=show_search_ip_page)
+search_ip_button.pack()
 
 # Pack the index frame
 index_frame.pack()
@@ -129,10 +140,28 @@ connection_back_button.pack()
 devices_label = tk.Label(connection_frame, text="")
 devices_label.pack()
 
-
+# Create a button to show connected devices
+get_devices_button = tk.Button(connection_frame, text="Show Connected Devices", command=get_connected_devices)
+get_devices_button.pack()
 
 # Pack the connection checker frame (initially hidden)
 connection_frame.pack_forget()
+
+# Create the search IP page
+search_ip_frame = tk.Frame(root)
+
+# Header for the search IP page
+search_ip_header_label = tk.Label(search_ip_frame, text="Search IP", font=header_font)
+search_ip_header_label.pack()
+
+# Button to go back to the index page
+search_ip_back_button = tk.Button(search_ip_frame, text="Back", command=lambda: (search_ip_frame.pack_forget(), index_frame.pack()), anchor='nw')
+search_ip_back_button.pack()
+
+# TODO: Add functionality for searching IP and displaying its details
+
+# Pack the search IP frame (initially hidden)
+search_ip_frame.pack_forget()
 
 # Run the Tkinter event loop
 root.mainloop()
