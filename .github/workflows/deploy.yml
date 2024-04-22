@@ -23,7 +23,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt  # Assuming you have a requirements.txt file
 
-      - name: Deploy Application
+      - name: Deploy to GitHub Pages
         run: |
-          # Replace this with your deployment command
-          python your_deployment_script.py
+        # Build the application (if necessary)
+        # Replace this with your build command
+        npm run build
+    
+        # Deploy to GitHub Pages
+        git checkout -b gh-pages
+        git add .
+        git commit -m "Deploy to GitHub Pages"
+        git push origin gh-pages
+         env:
+        CI: true
+
