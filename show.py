@@ -1,3 +1,4 @@
+#try
 import requests
 import tkinter as tk
 from tkinter import simpledialog, messagebox
@@ -33,8 +34,7 @@ if os.environ.get('DISPLAY'):
             ipv6_label.config(text="No IPv6 address found")
 
     def change_ipv6_address():
-        # Prompt the user to enter a new IPv6 address
-        new_ipv6 = simpledialog.askstring("Change IPv6 Address", "Enter the new IPv6 address:")
+        # Prompt the user to enter a new IPv6 addr        new_ipv6 = simpledialog.askstring("Change IPv6 Address", "Enter the new IPv6 address:")
         if new_ipv6:
             ipv6_label.config(text="New IPv6 address: " + new_ipv6)
 
