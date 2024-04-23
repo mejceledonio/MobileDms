@@ -7,6 +7,14 @@ import tkinter as tk
 from tkinter import simpledialog, messagebox
 import socket
 import subprocess
+import os
+
+# Check if the $DISPLAY environment variable is set
+if os.environ.get('DISPLAY'):
+    # Create the Tkinter root window only if a display is available
+    root = tk.Tk()
+    # Add your tkinter GUI code here
+
 
 def get_current_ip():
     # Get the current IPv4 address of the machine
@@ -208,3 +216,6 @@ search_ip_frame.pack_forget()
 
 # Run the Tkinter event loop
 root.mainloop()
+
+else:
+    print("No display environment available. Skipping GUI initialization.")
