@@ -38,4 +38,4 @@ jobs:
         flake8 show_test.py
     - name: Test with pytest
       run: |
-        pytest show_test.py
+        pytest show.py
